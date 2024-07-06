@@ -1,15 +1,48 @@
-import express from "express"
+import express, { text } from "express"
+import http from "http"
 import {PrismaClient} from "@prisma/client"
 import {course} from "./coursedata.js"
 import cors from "cors"
+import nodeMailer from 'nodemailer'
 
 const prisma = new PrismaClient()
 
 const app = express();
 app.use(cors())
 app.use(express.json());
+const PORT = process.env.PORT || 4000;
+app.listen(PORT, () => {
+  console.log(`Server is running on "http://localhost:${PORT}"`);
+});
+
+const html=`
+<h1>herllo/<h1>
+`;
+
+async function main(e1){
+  const auth=nodeMailer.createTransport({
+    service:"gmail",
+    secuire:true,
+    port: 465,
+    auth:{
+      user: "hsharrykj@gmail.com",
+      pass: "shbrnzvywdovazgf"
+    }
+  });
+  
+  
+  const info = await auth.sendMail({
+    from : "hsharrykj@gmail.com",
+    to: e1,
+    subject: "Referal Sucessfull",
+    text: "this is to certify that your referal was sucessfull.gi"
+  })
+  console.log("sucess");
+}
+  
 const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 const phoneRegex = /^\+?(\d{1,3})?[-. (]?(\d{1,4})[-. )]?(\d{1,4})[-. ]?(\d{1,9})$/;
+
 
 app.post('/', async (req, res) => {
   const { referral_name, referal_email, referal_phone, referee_name, refree_email, id } = req.body;
@@ -68,7 +101,8 @@ app.post('/', async (req, res) => {
     });
     console.log(referral);
 
-    //email yha pr implement kareyo
+    main(referal_email)
+    .catch(e=>console.log(e));
 
     res.status(201).json(referral);
   } catch (error) {
@@ -77,7 +111,3 @@ app.post('/', async (req, res) => {
   }
 });
 
-const PORT = process.env.PORT || 4000;
-app.listen(PORT, () => {
-  console.log(`Server is running on "http://localhost:${PORT}"`);
-});
