@@ -27,31 +27,30 @@ async function refreal_mail(e,n,c,m,e1,n1,m1){
     }
   });
   const html=`
-  <p>Hi ${n1},</p>
+  Hi ${n1},
+
+    I hope this email finds you well.  
+    I wanted to share something exciting with you. I recently enrolled in an incredible course called ${c}, and it has been an amazing experience so far. The course offers in-depth knowledge.
     
-    <p>I hope this email finds you well.</p>
+    The best part? There’s a special bonus for both of us if you decide to join through my referral! When you enroll using the referral link below, you’ll receive ${m1}, and I’ll also get a bonus as a thank you for referring you.
     
-    <p>I wanted to share something exciting with you. I recently enrolled in an incredible course called <strong>${c}</strong>, and it has been an amazing experience so far. The course offers in-depth knowledge on [brief course description], and I believe it would be perfect for you given your interest in [relevant interest/field].</p>
+    "https://referal-accredian.netlify.app/"Here’s the referral link
     
-    <p>The best part? There’s a special bonus for both of us if you decide to join through my referral! When you enroll using the referral link below, you’ll receive ${m1}, and I’ll also get a bonus as a thank you for referring you.</p>
+    If you have any questions or need more details about the course, feel free to ask. I’d be happy to share more about my experience and why I think it’s worth your time.
     
-    <p><a href="https://referal-accredian.netlify.app/">Here’s the referral link</a></p>
+    Looking forward to hearing from you and hopefully seeing you in the course!
     
-    <p>If you have any questions or need more details about the course, feel free to ask. I’d be happy to share more about my experience and why I think it’s worth your time.</p>
+    Best regards,
     
-    <p>Looking forward to hearing from you and hopefully seeing you in the course!</p>
-    
-    <p>Best regards,</p>
-    
-    <p>${n}</p>
+    ${n}
   `;
   const html1=`
-  <p>Hi ${n},</p>
+    Hi ${n},
     
-    <p>I hope this email finds you well.</p>
-    <p>You have Refered a frien and got a Bonus of ${m}.</p>
+    I hope this email finds you well.
+    You have Refered a frien and got a Bonus of ${m}.
 
-    <p>Thankyou keep refering</p>
+    Thankyou keep refering
   `;
   
   
@@ -131,7 +130,7 @@ app.post('/', async (req, res) => {
     });
     console.log(referral);
 
-    refreal_mail(referal_email,referee_name,course[id1],course[id1].referal_bonus,refree_email,referee_name,course[id1].referee_bonus)
+    refreal_mail(referal_email,referee_name,course[id1].name,course[id1].referal_bonus,refree_email,referee_name,course[id1].referee_bonus)
     .catch(e=>console.log(e));
 
     res.status(201).json(referral);
