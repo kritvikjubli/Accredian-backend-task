@@ -15,11 +15,8 @@ app.listen(PORT, () => {
   console.log(`Server is running on "http://localhost:${PORT}"`);
 });
 
-const html=`
-<h1>herllo/<h1>
-`;
 
-async function main(e1){
+async function refreal_mail(e,n,c,m,e1,n1,m1){
   const auth=nodeMailer.createTransport({
     service:"gmail",
     secuire:true,
@@ -29,13 +26,46 @@ async function main(e1){
       pass: "shbrnzvywdovazgf"
     }
   });
+  const html=`
+  <p>Hi ${n1},</p>
+    
+    <p>I hope this email finds you well.</p>
+    
+    <p>I wanted to share something exciting with you. I recently enrolled in an incredible course called <strong>${c}</strong>, and it has been an amazing experience so far. The course offers in-depth knowledge on [brief course description], and I believe it would be perfect for you given your interest in [relevant interest/field].</p>
+    
+    <p>The best part? There’s a special bonus for both of us if you decide to join through my referral! When you enroll using the referral link below, you’ll receive ${m1}, and I’ll also get a bonus as a thank you for referring you.</p>
+    
+    <p><a href="https://referal-accredian.netlify.app/">Here’s the referral link</a></p>
+    
+    <p>If you have any questions or need more details about the course, feel free to ask. I’d be happy to share more about my experience and why I think it’s worth your time.</p>
+    
+    <p>Looking forward to hearing from you and hopefully seeing you in the course!</p>
+    
+    <p>Best regards,</p>
+    
+    <p>${n}</p>
+  `;
+  const html1=`
+  <p>Hi ${n},</p>
+    
+    <p>I hope this email finds you well.</p>
+    <p>You have Refered a frien and got a Bonus of ${m}.</p>
+
+    <p>Thankyou keep refering</p>
+  `;
   
   
   const info = await auth.sendMail({
     from : "hsharrykj@gmail.com",
+    to: e,
+    subject: "Referal Sucessfull",
+    text: html
+  })
+  const info2 = await auth.sendMail({
+    from : "hsharrykj@gmail.com",
     to: e1,
     subject: "Referal Sucessfull",
-    text: "this is to certify that your referal was sucessfull.gi"
+    text: html1
   })
   console.log("sucess");
 }
@@ -101,7 +131,7 @@ app.post('/', async (req, res) => {
     });
     console.log(referral);
 
-    main(referal_email)
+    refreal_mail(referal_email,referee_name,course[id1],course[id1].referal_bonus,refree_email,referee_name,course[id1].referee_bonus)
     .catch(e=>console.log(e));
 
     res.status(201).json(referral);
